@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<!-- Content Start -->
+<div class="content">
+    {% include 'nav.html' %}
+
+
+    <div class="container-fluid pt-4 px-4">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="fa fa-exclamation-circle me-2"></i>{{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+        {% endif %}
+        <div class="row g-4">
+            <div class="col-sm-6 col-xl-4">
+                <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                    <i class="fa fa-users fa-3x text-primary"></i>
+                    <div class="ms-3">
+                        <p class="mb-2">Total Families</p>
+                        <h1 class="mb-0">{{ total_families }}</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-xl-4">
+                <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                    <i class="fa fa-stethoscope fa-3x text-primary"></i>
+                    <div class="ms-3">
+                        <p class="mb-2">Total Doctors</p>
+                        <h1 class="mb-0">{{ total_doctors }}</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-xl-4">
+                <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                    <i class="fa fa-syringe fa-3x text-primary"></i>
+                    <div class="ms-3">
+                        <p class="mb-2">Total Vaccinated People</p>
+                        <h1 class="mb-0">{{ total_vaccinated_people }}</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-xl-4">
+        <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+            <i class="fa fa-users fa-3x text-primary"></i>
+            <div class="ms-3">
+                <p class="mb-2">Total Adults</p>
+                <h1 class="mb-0">{{ total_adults }}</h1>
+            </div>
+        </div>
+            </div>
+            <div class="col-sm-6 col-xl-4">
+                <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                    <i class="fa fa-users fa-3x text-primary"></i>
+                    <div class="ms-3">
+                        <p class="mb-2">Total Infants</p>
+                        <h1 class="mb-0">{{ total_infants }}</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Chart Start -->
+            <div class="container-fluid pt-4 px-4">
+                <div class="row g-4">
+                    <div class="col-sm-12 col-xl-6">
+                        <div class="bg-light rounded h-100 p-4">
+                            <h6 class="mb-4">Single Line Chart</h6>
+                            <canvas id="bar-chart"></canvas>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-xl-6">
+                        <div class="bg-light rounded h-100 p-4">
+                            <h6 class="mb-4">Doughnut Chart</h6>
+                            <canvas id="doughnut-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Chart End -->
+    <div class="container-fluid pt-4 px-4">
+        <div class="bg-light text-center rounded p-4">
+            <div class="d-flex align-items-center justify-content-between mb-4">
+                <h6 class="mb-0">Doctors Registered</h6>
+            </div>
+            <div class="table-responsive">
+                <table class="table text-start align-middle table-bordered table-hover mb-0">
+                    <thead>
+                        <tr class="text-dark">
+                            <th scope="col">Unique ID</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Joined At</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for doctor in doctors %}
+                        <tr>
+                            <td>{{ doctor.user_id }}</td>
+                            <td>{{ doctor.username }}</td>
+                            <td>{{ doctor.created_at }}</td>
+                            <td>{{ doctor.email }}</td>
+                            <td><a class="btn btn-sm btn-danger"
+                                    href="{% url 'delete-doctor' user_id=doctor.user_id %}">Delete</a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid pt-4 px-4">
+        <div class="bg-light text-center rounded p-4">
+            <div class="d-flex align-items-center justify-content-between mb-4">
+                <h6 class="mb-0">Families Registered</h6>
+            </div>
+            <div class="table-responsive">
+                <table class="table text-start align-middle table-bordered table-hover mb-0">
+                    <thead>
+                        <tr class="text-dark">
+                            <th scope="col">Unique Family ID</th>
+                            <th scope="col">Address</th>
+                            <th scope="col">Doctor Assigned</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for family in families %}
+                        <tr>
+                            <td>{{ family.house_id }}</td>
+                            <td>{{ family.address }}</td>
+                            <td>{{ family.doctor_assigned }}</td>
+                            <td><a class="btn btn-sm btn-primary"
+                                    href="{% url 'add-family-members' family_id=family.house_id %}">Detail</a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    {% include 'footer.html' %}
+</div>
+<!-- Content End -->
+{% endblock content %}

@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+{% load custom_filter %}
+{% load static %}
+{% block content %}
+
+<!-- Content Start -->
+<div class="content">
+    {% include 'nav.html' %}
+
+    <!-- Form Start -->
+    <div class="container-fluid pt-4 px-4">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <i class="fa fa-exclamation-circle me-2"></i>{{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+        <div class="container pt-4 px-0 mb-3">
+        <div class="bg-light text-center rounded p-4">
+            <div class="d-flex align-items-center justify-content-between mb-4">
+                <h6 class="mb-0">Family Info</h6>
+            </div>
+            <div class="table-responsive">
+                <table class="table text-start align-middle table-bordered table-hover mb-0">
+                    <thead>
+                        <tr class="text-dark">
+                            <th scope="col">Unique Family ID</th>
+                            <th scope="col">Address</th>
+                            <th scope="col">Doctor Assigned</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                            <tr>
+                                <td>{{ family.house_id }}</td>
+                                <td>{{ family.address }}</td>
+                                <td>{{ family.doctor_assigned }}</td>
+                                <td>
+                                    <a class="btn btn-sm btn-primary" href="{% url 'edit-family' family_id=family.house_id %}">Edit</a>
+                                    <a class="btn btn-sm btn-danger" href="{% url 'delete-family' family_id=family.house_id %}">Delete</a>
+                                </td>
+                            </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+        <div class="row g-4">          
+            <div class="col-sm-12 col-xl-12">
+                <div class="bg-light rounded h-100 p-4">
+                    <h4 class="text-center py-3">Family Details Form</h4>
+                    <form method="post" action="{% url 'add-family-members' family_id=family.house_id %}" id="familyForm">
+                        {% csrf_token %}
+                        <!-- Inside your form in the template -->
+                            <input type="hidden" name="total_members" value="{{ total_people }}">
+                            <div class="family-member p-4 mb-3" style="background:#c8ddef;" id="family-members-container">
+                                <h3 class="py-3">Member Info</h3>
+                                <div class="row">
+                                    <div class="col-xl-4 mb-3">
+                                        <label for="member_name">Member Name:</label>
+                                        <input class="form-control" type="text" name="member_name" required>
+                                    </div>
+                                    <div class="col-xl-4 mb-3">
+                                        <label for="member_age">Member  Age:</label>
+                                        <input class="form-control" type="number" name="member_age" required>
+                                    </div>
+                                    <div class="col-xl-4 mb-3">
+                                        <label for="member_gender">Member  Gender:</label>
+                                        <select class="form-control" name="member_gender" required>
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                            <option value="Others">Others</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-xl-4 mb-3">
+                                        <label for="member_vaccination_status">Member  Vaccination Status:</label>
+                                        <br>
+                                        <input class="form-check-input vaccine-status" type="checkbox" name="member_vaccination_status" id="vaccine-status">
+                                        <label for="vaccine-status">Check if vaccinated</label>
+                                    </div>
+                                    <div class="col-xl-4 mb-3 vaccine-received-input" style="display: none;">
+                                        <label for="member_vaccine_received">Member  Vaccine Received:</label>
+                                        <input class="form-control" type="text" name="member_vaccine_received">
+                                    </div>
+                                </div>
+                            </div>
+
+
+                       
+                        <!-- Submit button -->
+                        <button type="submit" class="btn btn-success">Add Member</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="container pt-4 px-0">
+        <div class="bg-light text-center rounded p-4">
+            <div class="d-flex align-items-center justify-content-between mb-4">
+                <h6 class="mb-0">Family Members Info</h6>
+            </div>
+            <div class="table-responsive">
+                <table class="table text-start align-middle table-bordered table-hover mb-0">
+                    <thead>
+                        <tr class="text-dark">
+                            <th scope="col">Unique ID</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Gender</th>
+                            <th scope="col">Age</th>
+                            <th scope="col">Vaccine Status</th>
+                            <th scope="col">Vaccine Recieved</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for member in members %}
+                            <tr>
+                                <td>{{ member.member_id }}</td>
+                                <td>{{ member.name }}</td>
+                                <td>{{ member.gender }}</td>
+                                <td>{{ member.age }}</td>
+                                <td>{{ member.vaccination_status }}</td>
+                                <td>{{ member.vaccine_received }}</td>
+                                <td>
+                                    <a class="btn btn-sm btn-primary" href="{% url 'edit-member' member_id=member.member_id %}">Edit</a>
+                                    <a class="btn btn-sm btn-danger" href="{% url 'delete-member' member_id=member.member_id %}">Delete</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        </div>
+    </div>
+    
+    <!-- Form End -->
+
+    {% include 'footer.html' %}
+</div>
+<!-- Content End -->
+
+{% endblock content %}
