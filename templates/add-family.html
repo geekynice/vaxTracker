@@ -23,7 +23,7 @@
                                     <label for="doctor_assigned">Assign Doctor:</label>
                                     <select name="doctor_assigned" id="doctor_assigned" class="form-select">
                                         {% for doctor in doctors %}
-                                            <option value="{{doctor.username}}">{{doctor.username}}</option>
+                                            <option value="{{doctor.username}}">Dr. {{doctor.username}}</option>
                                         {% endfor %}
                                     </select>
                                 </div>
@@ -35,26 +35,6 @@
                                 </div>
                             </div>
                         </div>
-
-                        <!-- Family members container -->
-                        <div id="family-members-container">
-                            <!-- Family members input fields will be added here dynamically -->
-                        </div>
-
-                        <!-- Button to add more family members -->
-                        <!-- <button type="button" class="btn btn-sm btn-primary" id="add-member-btn">Add Family
-                            Member</button> -->
-
-                        <!-- Display totals without separate input fields -->
-                        <!-- <div class="d-flex align-items-center justify-content-between my-3">
-                            <strong>Total People:</strong> <span id="totalPeople" name="totalPeople">0</span><br />
-                            <strong>Total Vaccinated:</strong>
-                            <span id="totalVaccinated" name="totalVaccinated">0</span><br />
-                            <strong>Total Adults:</strong> <span id="totalAdults" name="totalAdults">0</span><br />
-                            <strong>Total Infants:</strong> <span id="totalInfants" name="totalInfants">0</span>
-                            
-                        </div> -->
-
                         <!-- Submit button -->
                         <button type="submit" class="btn btn-success" >Add Family</button>
                     </form>

@@ -44,6 +44,15 @@
                 </div>
             </div>
             <div class="col-sm-6 col-xl-4">
+                <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                    <i class="fa fa-syringe fa-3x text-primary"></i>
+                    <div class="ms-3">
+                        <p class="mb-2">Total Unvaccinated People</p>
+                        <h1 class="mb-0">{{ total_unvaccinated_people }}</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-xl-4">
         <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
             <i class="fa fa-users fa-3x text-primary"></i>
             <div class="ms-3">
@@ -101,7 +110,7 @@
                         {% for doctor in doctors %}
                         <tr>
                             <td>{{ doctor.user_id }}</td>
-                            <td>{{ doctor.username }}</td>
+                            <td>Dr. {{ doctor.username }}</td>
                             <td>{{ doctor.created_at }}</td>
                             <td>{{ doctor.email }}</td>
                             <td><a class="btn btn-sm btn-danger"
@@ -133,7 +142,7 @@
                         <tr>
                             <td>{{ family.house_id }}</td>
                             <td>{{ family.address }}</td>
-                            <td>{{ family.doctor_assigned }}</td>
+                            <td>Dr. {{ family.doctor_assigned }}</td>
                             <td><a class="btn btn-sm btn-primary"
                                     href="{% url 'add-family-members' family_id=family.house_id %}">Detail</a></td>
                         </tr>

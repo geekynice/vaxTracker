@@ -61,17 +61,25 @@
     var myChart3 = new Chart(ctx3, {
         type: "bar",
         data: {
-            labels: ["Total Families", "Total Vaccinated People", "Total Doctors", "Total Adults", "Total Infants"],
+            labels: ["Total Families", "Total Vaccinated People", "Total Doctors", "Total Adults", "Total Infants", "Total Unvaccinated"],
             datasets: [{
                 label: "Counts",
                 fill: false,
-                backgroundColor: "rgba(0, 156, 255, .3)",
+                backgroundColor: [
+                    "blue",
+                    "green",
+                    "rgba(0, 156, 255, .5)",
+                    "orange",
+                    "red",
+                    "brown"
+                ],
                 data: [
                     {{ total_families }},
                     {{ total_vaccinated_people }},
                     {{ total_doctors }},
                     {{ total_adults }},
-                    {{ total_infants }}
+                    {{ total_infants }},
+                    {{ total_unvaccinated_people }}
                 ]
             }]
         },
@@ -84,21 +92,23 @@
     var myChart6 = new Chart(ctx6, {
         type: "doughnut",
         data: {
-            labels: ["Total Families", "Total Vaccinated People", "Total Doctors", "Total Adults", "Total Infants"],
+            labels: ["Total Families", "Total Vaccinated People", "Total Doctors", "Total Adults", "Total Infants", "Total Unvaccinated"],
             datasets: [{
                 backgroundColor: [
                     "blue",
                     "green",
                     "rgba(0, 156, 255, .5)",
                     "orange",
-                    "red"
+                    "red",
+                    "brown"
                 ],
                 data: [
                     {{ total_families }},
                     {{ total_vaccinated_people }},
                     {{ total_doctors }},
                     {{ total_adults }},
-                    {{ total_infants }}
+                    {{ total_infants }},
+                    {{ total_unvaccinated_people }}
                 ]
             }]
         },

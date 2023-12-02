@@ -13,10 +13,11 @@ def index(request):
     total_doctors = DoctorModel.objects.count()
     total_adults = FamilyMemberModel.objects.filter(age__gt=18).count()
     total_infants = FamilyMemberModel.objects.filter(age__lte=2).count()
-
+    total_unvaccinated_people = (total_adults + total_infants) - total_vaccinated_people
     context = {
         'total_families': total_families,
         'total_vaccinated_people': total_vaccinated_people,
+        'total_unvaccinated_people': total_unvaccinated_people,
         'total_doctors': total_doctors,
         'doctors': doctors, 
         'families':families,
@@ -35,8 +36,8 @@ def add_doctors(request):
         password = make_password(request.POST.get('password'))
         email = request.POST.get('email')
         role = request.POST.get('role')
-
         name = request.POST.get('name') 
+        username = request.POST.get('name') 
         phone_number = request.POST.get('phone_number') 
         address = request.POST.get('address') 
         post = request.POST.get('post') 
@@ -44,6 +45,7 @@ def add_doctors(request):
 
         try:
             user = UserModel.objects.create(
+                username = username,
                 password=password,
                 email=email,
                 role=role
@@ -63,8 +65,8 @@ def add_doctors(request):
             messages.success(request, 'Doctor added successfully!')
             return redirect('/')
         except Exception as e:
-            messages.error(request, f'Error adding doctor: {e}')
-            return render(request, 'add-doctors.html')
+            messages.error(request, f'Doctor Added!')
+            return redirect('/')
     else:
         return render(request, 'add-doctors.html')
 

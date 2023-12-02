@@ -36,7 +36,7 @@
                             <tr>
                                 <td>{{ family.house_id }}</td>
                                 <td>{{ family.address }}</td>
-                                <td>{{ family.doctor_assigned }}</td>
+                                <td>Dr. {{ family.doctor_assigned }}</td>
                                 <td>
                                     <a class="btn btn-sm btn-primary" href="{% url 'edit-family' family_id=family.house_id %}">Edit</a>
                                     <a class="btn btn-sm btn-danger" href="{% url 'delete-family' family_id=family.house_id %}">Delete</a>

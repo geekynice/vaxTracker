@@ -23,7 +23,7 @@
                                     <label for="doctor_assigned">Assign Doctor:</label>
                                     <select name="doctor_assigned" id="doctor_assigned" class="form-select">
                                         {% for doctor in doctors %}
-                                            <option value="{{ doctor.username }}" {% if family.doctor_assigned == doctor.username %}selected{% endif %}>{{ doctor.username }}</option>
+                                            <option value="{{ doctor.username }}" {% if family.doctor_assigned == doctor.username %}selected{% endif %}>Dr. {{ doctor.username }}</option>
                                         {% endfor %}
                                     </select>
                                 </div>
