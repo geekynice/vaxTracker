@@ -2,12 +2,8 @@
 {% load custom_filter %}
 {% load static %}
 {% block content %}
-
-<!-- Content Start -->
 <div class="content">
     {% include 'nav.html' %}
-
-    <!-- Form Start -->
     <div class="container-fluid pt-4 px-4">
         {% if messages %}
             {% for message in messages %}
@@ -53,7 +49,6 @@
                     <h4 class="text-center py-3">Family Details Form</h4>
                     <form method="post" action="{% url 'add-family-members' family_id=family.house_id %}" id="familyForm">
                         {% csrf_token %}
-                        <!-- Inside your form in the template -->
                             <input type="hidden" name="total_members" value="{{ total_people }}">
                             <div class="family-member p-4 mb-3" style="background:#c8ddef;" id="family-members-container">
                                 <h3 class="py-3">Member Info</h3>
@@ -86,10 +81,6 @@
                                     </div>
                                 </div>
                             </div>
-
-
-                       
-                        <!-- Submit button -->
                         <button type="submit" class="btn btn-success">Add Member</button>
                     </form>
                 </div>
