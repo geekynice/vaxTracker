@@ -3,6 +3,7 @@ from django.contrib import messages
 from .models import DoctorModel, FamilyMemberModel, FamilyModel, UserModel
 from django.contrib.auth.hashers import make_password
 import uuid
+import requests
 
 def index(request):
     doctors = DoctorModel.objects.all()
@@ -100,6 +101,8 @@ def add_family(request):
         address = request.POST.get('address')
         doctor_assigned = request.POST.get('doctor_assigned')
         total_people = request.POST.get('totalMembers')
+
+        # Create a FamilyModel instance
         family = FamilyModel.objects.create(
             address=address,
             doctor_assigned=doctor_assigned,
@@ -108,12 +111,36 @@ def add_family(request):
             total_adults=0,
             total_infants=0
         )
-        messages.success(request, "Family Added successfully! Please add the members now!")
 
-        return redirect('add-family-members', family_id=family.house_id)
+        # Create JSON payload
+        payload = {
+            'address': family.address,
+            'doctor_assigned': family.doctor_assigned,
+            'total_people': family.total_people,
+            'total_vaccinated': family.total_vaccinated,
+            'total_adults': family.total_adults,
+            'total_infants': family.total_infants
+        }
+
+        # Send data to endpoint with custom header
+        endpoint = "your api endpoint"
+        headers = {
+            'Content-Type': 'application/json',
+            'X-Cassandra-Token': 'your_cassandra_token_here'  # Replace 'your_cassandra_token_here' with your actual token
+        }
+        
+        try:
+            response = requests.post(endpoint, json=payload, headers=headers)
+            response.raise_for_status()  # Raise exception for HTTP errors
+            messages.success(request, "Family Added successfully! Please add the members now!")
+            return redirect('add-family-members', family_id=family.house_id)
+        except requests.exceptions.RequestException as e:
+            messages.error(request, f"Failed to send data to endpoint: {e}")
+            return redirect('add-family')
 
     context = {'doctors': doctors}
     return render(request, 'add-family.html', context)
+
 
 def add_family_members(request, family_id):
     family = get_object_or_404(FamilyModel, house_id=family_id)
