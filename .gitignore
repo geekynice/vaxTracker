@@ -1,2 +1,11 @@
-settings.py
-vaxTracker-token.json
+migrations/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+secure-connect-vaxtracker.zip
+
+db.sqlite3
+.DS_Store

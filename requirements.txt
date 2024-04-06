@@ -1,5 +1,5 @@
 cassandra-driver
-django-cassandra-engine-1.8.0
+django_cassandra_engine
 django-cassandra-session
 Q
 query-2.0
